@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="328.0" maxWidth="438.0" minHeight="288.0" minWidth="363.0" prefHeight="288.0" prefWidth="363.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.clinet.controller.LoginController">
+<AnchorPane maxHeight="328.0" maxWidth="438.0" minHeight="288.0" minWidth="363.0" prefHeight="288.0" prefWidth="363.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.clinet.controller.LoginController">
    <children>
       <ImageView layoutX="149.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
          <image>

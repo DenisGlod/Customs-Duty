@@ -21,11 +21,11 @@
 		<property name="hibernate.c3p0.max_statements">50</property>
 		<property name="hibernate.c3p0.idle_test_period">3000</property>
 
-		<mapping class="com.project.server.dao.entity.Cargo" />
-		<mapping class="com.project.server.dao.entity.Client" />
-		<mapping class="com.project.server.dao.entity.Post" />
-		<mapping class="com.project.server.dao.entity.Product" />
-		<mapping class="com.project.server.dao.entity.ProductCargo" />
-		<mapping class="com.project.server.dao.entity.Role" />
+		<mapping class="com.server.dao.entity.Cargo" />
+		<mapping class="com.server.dao.entity.Client" />
+		<mapping class="com.server.dao.entity.Post" />
+		<mapping class="com.server.dao.entity.Product" />
+		<mapping class="com.server.dao.entity.ProductCargo" />
+		<mapping class="com.server.dao.entity.Role" />
 	</session-factory>
 </hibernate-configuration>

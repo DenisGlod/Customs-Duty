@@ -46,7 +46,7 @@
 				<configuration>
 					<jlinkImageName>Client</jlinkImageName>
 					<launcher>Client Launcher</launcher>
-					<mainClass>com.project.clinet.App</mainClass>
+					<mainClass>com.clinet.App</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
