@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.courseproject.customs-duty</groupId>
 	<artifactId>client</artifactId>
-	<version>${parent.version}</version>
+	<version>1.0</version>
 
 	<parent>
 		<artifactId>customs-duty</artifactId>
@@ -19,6 +19,7 @@
 		<maven.compiler.target>11</maven.compiler.target>
 		<javafx.version>11.0.2</javafx.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.openjfx</groupId>

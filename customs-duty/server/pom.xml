@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.courseproject.customs-duty</groupId>
 	<artifactId>server</artifactId>
-	<version>${parent.version}</version>
+	<version>1.0</version>
 	<packaging>jar</packaging>
 
 	<parent>
