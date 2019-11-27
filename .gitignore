@@ -12,8 +12,8 @@ hs_err_pid*
 ##############################
 ## Maven
 ##############################
-target/
 !target/generated-sources/annotations/**
+target/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
