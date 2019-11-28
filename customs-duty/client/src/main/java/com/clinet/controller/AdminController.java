@@ -1,6 +1,7 @@
 package com.clinet.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.bean.ClientBean;
@@ -69,7 +70,16 @@ public class AdminController implements Initializable {
 		try {
 			lFullName.setText(cb.getLastName() + " " + cb.getFirstName() + " " + cb.getMiddleName());
 			lRole.setText(cb.getRole().getName());
-			Service.action(Command.GET_USER_TABLE);
+			var object = Service.action(Command.GET_USER_TABLE);
+			var clientList = new ArrayList<ClientBean>();
+			if (object instanceof ArrayList<?>) {
+				var al = (ArrayList<?>) object;
+				for (Object client : al) {
+					if (client instanceof ClientBean) {
+						clientList.add((ClientBean) client);
+					}
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

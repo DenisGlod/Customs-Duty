@@ -10,6 +10,16 @@ public class RoleBean implements Serializable {
 
 	private String name;
 
+	public RoleBean() {
+		super();
+	}
+
+	public RoleBean(Long id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
 	public Long getId() {
 		return id;
 	}
