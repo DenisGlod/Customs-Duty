@@ -16,6 +16,16 @@ public class PostBean implements Serializable {
 
 	private List<CargoBean> cargos = new ArrayList<CargoBean>();
 
+	public PostBean() {
+	}
+
+	public PostBean(Long id, String name, String adress) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.adress = adress;
+	}
+
 	public Long getId() {
 		return id;
 	}

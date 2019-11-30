@@ -16,6 +16,17 @@ public class ProductCargoBean implements Serializable {
 
 	private Double customsDuty;
 
+	public ProductCargoBean() {
+	}
+
+	public ProductCargoBean(Long id, ProductBean product, CargoBean cargo, Double weight, Double customsDuty) {
+		this.id = id;
+		this.product = product;
+		this.cargo = cargo;
+		this.weight = weight;
+		this.customsDuty = customsDuty;
+	}
+
 	public Long getId() {
 		return id;
 	}

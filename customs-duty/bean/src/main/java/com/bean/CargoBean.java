@@ -2,7 +2,6 @@ package com.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class CargoBean implements Serializable {
@@ -13,11 +12,21 @@ public class CargoBean implements Serializable {
 
 	private String uuid;
 
-	private Date date;
+	private String date;
 
 	private PostBean post;
 
 	private List<ProductCargoBean> productCargos = new ArrayList<ProductCargoBean>();
+
+	public CargoBean() {
+	}
+
+	public CargoBean(Long id, String uuid, String date, PostBean post) {
+		this.id = id;
+		this.uuid = uuid;
+		this.date = date;
+		this.post = post;
+	}
 
 	public Long getId() {
 		return id;
@@ -35,11 +44,11 @@ public class CargoBean implements Serializable {
 		this.uuid = uuid;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

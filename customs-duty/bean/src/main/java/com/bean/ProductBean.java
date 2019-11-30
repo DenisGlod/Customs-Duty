@@ -16,6 +16,16 @@ public class ProductBean implements Serializable {
 
 	private List<ProductCargoBean> productCargos = new ArrayList<ProductCargoBean>();
 
+	public ProductBean() {
+	}
+
+	public ProductBean(Long id, Integer code, String name) {
+		super();
+		this.id = id;
+		this.code = code;
+		this.name = name;
+	}
+
 	public Long getId() {
 		return id;
 	}

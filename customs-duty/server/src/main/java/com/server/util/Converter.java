@@ -1,8 +1,18 @@
 package com.server.util;
 
+import java.text.SimpleDateFormat;
+
+import com.bean.CargoBean;
 import com.bean.ClientBean;
+import com.bean.PostBean;
+import com.bean.ProductBean;
+import com.bean.ProductCargoBean;
 import com.bean.RoleBean;
+import com.server.dao.entity.Cargo;
 import com.server.dao.entity.Client;
+import com.server.dao.entity.Post;
+import com.server.dao.entity.Product;
+import com.server.dao.entity.ProductCargo;
 import com.server.dao.entity.Role;
 
 public class Converter {
@@ -11,14 +21,36 @@ public class Converter {
 	}
 
 	public static ClientBean convertToClientBean(Client client) {
-		var clientBean = new ClientBean(client.getId(), client.getLogin(), client.getPassword(),
-				convertToRoleBean(client.getRole()), client.getStatus(), client.getFirstName(), client.getLastName(),
+		return new ClientBean(client.getId(), client.getLogin(), client.getPassword(), convertToRoleBean(client.getRole()), client.getStatus(), client.getFirstName(), client.getLastName(),
 				client.getMiddleName());
-		return clientBean;
 	}
 
 	public static RoleBean convertToRoleBean(Role role) {
 		return new RoleBean(role.getId(), role.getName());
+	}
+
+	public static ProductBean convertToProductBean(Product product) {
+		return new ProductBean(product.getId(), product.getCode(), product.getName());
+	}
+
+	public static CargoBean convertToCargoBean(Cargo item) {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+		return new CargoBean(item.getId(), item.getUuid(), formatter.format(item.getDateCargo()), convertToPostBean(item.getPost()));
+	}
+
+	public static PostBean convertToPostBean(Post post) {
+		return new PostBean(post.getId(), post.getName(), post.getAdress());
+	}
+
+	public static ProductCargoBean convertToProductCargoBean(ProductCargo item) {
+		return new ProductCargoBean(item.getId(), convertToProductBean(item.getProduct()), convertToCargoBean(item.getCargo()), item.getWeight(), item.getCustomsDuty());
+	}
+
+	public static Role convertToRole(RoleBean roleBean) {
+		var role = new Role();
+		role.setId(roleBean.getId());
+		role.setName(roleBean.getName());
+		return role;
 	}
 
 }

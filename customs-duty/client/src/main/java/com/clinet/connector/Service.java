@@ -32,8 +32,7 @@ public class Service {
 		if (socketClient == null || socketClient.isClosed()) {
 			socketClient = new Socket(host, port);
 		}
-		try (ObjectOutputStream oos = new ObjectOutputStream(socketClient.getOutputStream());
-				ObjectInputStream ois = new ObjectInputStream(socketClient.getInputStream())) {
+		try (ObjectOutputStream oos = new ObjectOutputStream(socketClient.getOutputStream()); ObjectInputStream ois = new ObjectInputStream(socketClient.getInputStream())) {
 			switch (command) {
 			case LOGIN:
 				oos.writeObject(Command.LOGIN);
@@ -46,8 +45,32 @@ public class Service {
 				oos.flush();
 				result = ois.readObject();
 				break;
-			default:
-				throw new UnsupportedOperationException("Ошибка! Некорректна операция!");
+			case GET_PRODUCT_TABLE:
+				oos.writeObject(Command.GET_PRODUCT_TABLE);
+				oos.flush();
+				result = ois.readObject();
+				break;
+			case GET_CARGO_TABLE:
+				oos.writeObject(Command.GET_CARGO_TABLE);
+				oos.flush();
+				result = ois.readObject();
+				break;
+			case GET_POST_TABLE:
+				oos.writeObject(Command.GET_POST_TABLE);
+				oos.flush();
+				result = ois.readObject();
+				break;
+			case GET_PRODUCTCARGO_TABLE:
+				oos.writeObject(Command.GET_PRODUCTCARGO_TABLE);
+				oos.flush();
+				result = ois.readObject();
+				break;
+			case UPDATE_USER:
+				oos.writeObject(Command.UPDATE_USER);
+				oos.writeObject(object);
+				oos.flush();
+				result = ois.readObject();
+				break;
 			}
 		}
 		return result;
