@@ -53,4 +53,17 @@ public class Converter {
 		return role;
 	}
 
+	public static Client convertToClient(ClientBean clientUpdate) {
+		return new Client(clientUpdate.getId(), clientUpdate.getLogin(), clientUpdate.getPassword(), convertToRole(clientUpdate.getRole()), clientUpdate.getStatus(), clientUpdate.getFirstName(),
+				clientUpdate.getLastName(), clientUpdate.getMiddleName());
+	}
+
+	public static Product convertToProduct(ProductBean data) {
+		var product = new Product();
+		product.setId(data.getId());
+		product.setCode(data.getCode());
+		product.setName(data.getName());
+		return product;
+	}
+
 }

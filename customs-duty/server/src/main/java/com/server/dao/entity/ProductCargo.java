@@ -4,14 +4,13 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@Entity(name = "Product_Cargo")
+@Entity
 public class ProductCargo implements Serializable {
 
 	private static final long serialVersionUID = -1172214187709867725L;
@@ -26,7 +25,7 @@ public class ProductCargo implements Serializable {
 	private Product product;
 
 	@ManyToOne
-	@JoinColumn(name = "cargo_id", foreignKey = @ForeignKey(name = "CARGO_ID_FK"), nullable = false)
+	@JoinColumn(name = "cargo_id", nullable = false)
 	private Cargo cargo;
 
 	@Column(nullable = false)

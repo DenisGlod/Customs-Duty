@@ -43,6 +43,21 @@ public class Client implements Serializable {
 	@Column
 	private String middleName;
 
+	public Client() {
+	}
+
+	public Client(Long id, String login, String password, Role role, Boolean status, String firstName, String lastName, String middleName) {
+		super();
+		this.id = id;
+		this.login = login;
+		this.password = password;
+		this.role = role;
+		this.status = status;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.middleName = middleName;
+	}
+
 	public Long getId() {
 		return id;
 	}

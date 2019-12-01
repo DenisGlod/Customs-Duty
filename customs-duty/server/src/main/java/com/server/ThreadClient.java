@@ -25,32 +25,24 @@ public class ThreadClient implements Runnable {
 			Object data = null;
 			Object responceObject = null;
 			switch (action) {
-			case LOGIN:
-				data = oin.readObject();
-				System.out.println("Принятые данные ->" + data);
-				responceObject = Service.action(action, data);
-				break;
 			case GET_USER_TABLE:
-				responceObject = Service.action(action);
-				break;
 			case GET_CARGO_TABLE:
-				responceObject = Service.action(action);
-				break;
 			case GET_POST_TABLE:
-				responceObject = Service.action(action);
-				break;
 			case GET_PRODUCTCARGO_TABLE:
-				responceObject = Service.action(action);
-				break;
 			case GET_PRODUCT_TABLE:
 				responceObject = Service.action(action);
 				break;
+			case LOGIN:
 			case UPDATE_USER:
+			case DELETE_USER:
+			case DELETE_PRODUCT:
+			case DELETE_CARGO:
+			case DELETE_PRODUCTCARGO:
+			case DELETE_POST:
 				data = oin.readObject();
 				System.out.println("Принятые данные ->" + data);
 				responceObject = Service.action(action, data);
 				break;
-
 			}
 			System.out.println("Отправляемые данные ->" + responceObject);
 			System.out.println("clientDialog.hashCode() -> " + clientDialog.hashCode());

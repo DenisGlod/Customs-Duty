@@ -67,7 +67,7 @@
 	<top>
 		<AnchorPane prefHeight="48.0" prefWidth="600.0" style="-fx-background-color: #fafafa;" BorderPane.alignment="CENTER">
 			<children>
-				<Button fx:id="bUserSettings" layoutX="550.0" layoutY="10.0" mnemonicParsing="false" onAction="#bUserSettings" AnchorPane.rightAnchor="14.0">
+				<Button layoutX="550.0" layoutY="10.0" mnemonicParsing="false" onAction="#onUserSettingsAction" AnchorPane.rightAnchor="14.0">
 					<graphic>
 						<ImageView pickOnBounds="true" preserveRatio="true">
 							<image>
@@ -91,7 +91,7 @@
 	<bottom>
 		<ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
 			<buttons>
-				<Button fx:id="bInsert" mnemonicParsing="false" text="Добавить">
+				<Button mnemonicParsing="false" onAction="#onAddAction" text="Добавить">
 					<graphic>
 						<ImageView pickOnBounds="true" preserveRatio="true">
 							<image>
@@ -100,7 +100,7 @@
 						</ImageView>
 					</graphic>
 				</Button>
-				<Button fx:id="bUpdate" mnemonicParsing="false" text="Изменить">
+				<Button mnemonicParsing="false" onAction="#onEditAction" text="Изменить">
 					<graphic>
 						<ImageView pickOnBounds="true" preserveRatio="true">
 							<image>
@@ -109,7 +109,7 @@
 						</ImageView>
 					</graphic>
 				</Button>
-				<Button fx:id="bDelete" mnemonicParsing="false" text="Удалить">
+				<Button mnemonicParsing="false" onAction="#onDeleteAction" text="Удалить">
 					<graphic>
 						<ImageView pickOnBounds="true" preserveRatio="true">
 							<image>

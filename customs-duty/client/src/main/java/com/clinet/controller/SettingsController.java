@@ -40,7 +40,12 @@ public class SettingsController implements Initializable {
 			cb.setMiddleName(tMiddleName.getText());
 			cb.setPassword(tPassword.getText());
 			int status = (int) Service.action(Command.UPDATE_USER, cb);
-			AlterMessageBox.showInfo("Обновление -> " + status);
+			if (status == 1) {
+				AlterMessageBox.showInfo("Обновление упешно.");
+			} else {
+				AlterMessageBox.showError("Ошибка!");
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

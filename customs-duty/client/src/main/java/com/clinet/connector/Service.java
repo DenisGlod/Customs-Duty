@@ -71,6 +71,36 @@ public class Service {
 				oos.flush();
 				result = ois.readObject();
 				break;
+			case DELETE_USER:
+				oos.writeObject(Command.DELETE_USER);
+				oos.writeObject(object);
+				oos.flush();
+				result = ois.readObject();
+				break;
+			case DELETE_PRODUCT:
+				oos.writeObject(Command.DELETE_PRODUCT);
+				oos.writeObject(object);
+				oos.flush();
+				result = ois.readObject();
+				break;
+			case DELETE_CARGO:
+				oos.writeObject(Command.DELETE_CARGO);
+				oos.writeObject(object);
+				oos.flush();
+				result = ois.readObject();
+				break;
+			case DELETE_PRODUCTCARGO:
+				oos.writeObject(Command.DELETE_PRODUCTCARGO);
+				oos.writeObject(object);
+				oos.flush();
+				result = ois.readObject();
+				break;
+			case DELETE_POST:
+				oos.writeObject(Command.DELETE_POST);
+				oos.writeObject(object);
+				oos.flush();
+				result = ois.readObject();
+				break;
 			}
 		}
 		return result;

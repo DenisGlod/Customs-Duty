@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,7 +29,7 @@ public class Post implements Serializable {
 	@Column
 	private String adress;
 
-	@OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Cargo> cargos = new ArrayList<Cargo>();
 
 	public Long getId() {

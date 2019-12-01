@@ -21,7 +21,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -49,40 +48,130 @@ public class AdminController implements Initializable {
 
 	@FXML
 	private TableView<ClientBean> tableUsers;
-
 	@FXML
 	private TableView<ProductBean> tableProduct;
-
 	@FXML
 	private TableView<CargoBean> tableCargo;
-
 	@FXML
 	private TableView<ProductCargoBean> tableProductCargo;
-
 	@FXML
 	private TableView<PostBean> tablePost;
 
 	@FXML
-	private Button bUserSettings;
-
-	@FXML
 	private Label lRole;
-
 	@FXML
 	private Label lFullName;
 
 	@FXML
-	private Button bInsert;
-
-	@FXML
-	private Button bUpdate;
-
-	@FXML
-	private Button bDelete;
-
-	@FXML
-	void bUserSettings(ActionEvent event) {
+	private void onUserSettingsAction(ActionEvent event) {
 		SettingsController.show(cb);
+		tabSelectedChanged();
+	}
+
+	@FXML
+	private void onAddAction(ActionEvent event) {
+		try {
+			for (Tab tab : tabPane.getTabs()) {
+				if (tab.isSelected()) {
+					switch (tab.getId()) {
+					case "tabUserTable":
+						AddEditControllerForUserTable.show(Command.ADD_USER);
+						break;
+					case "tabProductTable":
+						AddEditControllerForUserTable.show(Command.ADD_PRODUCT);
+						break;
+					case "tabCargoTable":
+						AddEditControllerForUserTable.show(Command.ADD_CARGO);
+						break;
+					case "tabProductCargoTable":
+						AddEditControllerForUserTable.show(Command.ADD_PRODUCTCARGO);
+						break;
+					case "tabPostTable":
+						AddEditControllerForUserTable.show(Command.ADD_POST);
+						break;
+					}
+					break;
+				}
+			}
+			tabSelectedChanged();
+		} catch (Exception e) {
+			e.printStackTrace();
+			AlterMessageBox.showError(e.getMessage());
+		}
+	}
+
+	@FXML
+	private void onDeleteAction(ActionEvent event) {
+		try {
+			int flag = 0;
+			for (Tab tab : tabPane.getTabs()) {
+				if (tab.isSelected()) {
+					switch (tab.getId()) {
+					case "tabUserTable":
+						var clientBeanDelete = tableUsers.getSelectionModel().getSelectedItem();
+						flag = (int) Service.action(Command.DELETE_USER, clientBeanDelete);
+						break;
+					case "tabProductTable":
+						var productBean = tableProduct.getSelectionModel().getSelectedItem();
+						flag = (int) Service.action(Command.DELETE_PRODUCT, productBean);
+						break;
+					case "tabCargoTable":
+						var cargoBean = tableCargo.getSelectionModel().getSelectedItem();
+						flag = (int) Service.action(Command.DELETE_CARGO, cargoBean);
+						break;
+					case "tabProductCargoTable":
+						var productCargoBean = tableProductCargo.getSelectionModel().getSelectedItem();
+						flag = (int) Service.action(Command.DELETE_PRODUCTCARGO, productCargoBean);
+						break;
+					case "tabPostTable":
+						var postBean = tablePost.getSelectionModel().getSelectedItem();
+						flag = (int) Service.action(Command.DELETE_POST, postBean);
+						break;
+					}
+				}
+			}
+			tabSelectedChanged();
+			if (flag == 1) {
+				AlterMessageBox.showInfo("Успешно удалено");
+			} else {
+				AlterMessageBox.showError("Ошибка!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			AlterMessageBox.showError(e.getMessage());
+		}
+	}
+
+	@FXML
+	private void onEditAction(ActionEvent event) {
+		try {
+			for (Tab tab : tabPane.getTabs()) {
+				if (tab.isSelected() && !tableUsers.getSelectionModel().getSelectedItems().isEmpty()) {
+					switch (tab.getId()) {
+					case "tabUserTable":
+						AddEditControllerForUserTable.show(Command.UPDATE_USER, tableUsers.getSelectionModel().getSelectedItem());
+						break;
+					case "tabProductTable":
+						AddEditControllerForUserTable.show(Command.UPDATE_PRODUCT, tableProduct.getSelectionModel().getSelectedItem());
+						break;
+					case "tabCargoTable":
+						AddEditControllerForUserTable.show(Command.UPDATE_CARGO, tableCargo.getSelectionModel().getSelectedItem());
+						break;
+					case "tabProductCargoTable":
+						AddEditControllerForUserTable.show(Command.UPDATE_PRODUCTCARGO, tableProductCargo.getSelectionModel().getSelectedItem());
+						break;
+					case "tabPostTable":
+						AddEditControllerForUserTable.show(Command.UPDATE_POST, tablePost.getSelectionModel().getSelectedItem());
+						break;
+					}
+					break;
+				}
+			}
+			tabSelectedChanged();
+		} catch (Exception e) {
+			e.printStackTrace();
+			AlterMessageBox.showError(e.getMessage());
+		}
 	}
 
 	public static void show(ClientBean clientBean) {
@@ -151,6 +240,7 @@ public class AdminController implements Initializable {
 						tableUsers.getColumns().add(lastName);
 						tableUsers.getColumns().add(firstName);
 						tableUsers.getColumns().add(middleName);
+						// tableUsers.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 						break;
 					case "tabProductTable":
 						tableProduct.getColumns().clear();
@@ -168,6 +258,7 @@ public class AdminController implements Initializable {
 						tableProduct.getColumns().add(idProduct);
 						tableProduct.getColumns().add(code);
 						tableProduct.getColumns().add(name);
+						// tableProduct.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 						break;
 					case "tabCargoTable":
 						tableCargo.getColumns().clear();
@@ -188,6 +279,7 @@ public class AdminController implements Initializable {
 						tableCargo.getColumns().add(uuid);
 						tableCargo.getColumns().add(date);
 						tableCargo.getColumns().add(post);
+						// tableCargo.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 						break;
 					case "tabProductCargoTable":
 						tableProductCargo.getColumns().clear();
@@ -211,6 +303,7 @@ public class AdminController implements Initializable {
 						tableProductCargo.getColumns().add(cargoUUID);
 						tableProductCargo.getColumns().add(weight);
 						tableProductCargo.getColumns().add(customsDuty);
+						// tableProductCargo.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 						break;
 					case "tabPostTable":
 						tablePost.getColumns().clear();
@@ -228,12 +321,14 @@ public class AdminController implements Initializable {
 						tablePost.getColumns().add(idPost);
 						tablePost.getColumns().add(namePost);
 						tablePost.getColumns().add(adress);
+						// tablePost.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 						break;
 					}
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			AlterMessageBox.showError(e.getMessage());
 		}
 	}
 

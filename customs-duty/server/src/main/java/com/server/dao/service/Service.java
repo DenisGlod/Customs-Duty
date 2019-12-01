@@ -33,7 +33,7 @@ public class Service {
 			ClientBean clientBean = (ClientBean) data;
 			var criteriaLogin = builder.createQuery(Client.class);
 			var root = criteriaLogin.from(Client.class);
-			criteriaLogin.select(root).where(builder.equal(root.get("login"), clientBean.getLogin()), builder.equal(root.get(Client_.PASSWORD), clientBean.getPassword()));
+			criteriaLogin.select(root).where(builder.equal(root.get(Client_.LOGIN), clientBean.getLogin()), builder.equal(root.get(Client_.PASSWORD), clientBean.getPassword()));
 			var sResult = session.createQuery(criteriaLogin).getSingleResult();
 			if (sResult == null) {
 				responceObject = new ClientBean();
@@ -100,8 +100,8 @@ public class Service {
 		case UPDATE_USER:
 			ClientBean clientUpdate = (ClientBean) data;
 			var criteriaUserUpdate = builder.createCriteriaUpdate(Client.class);
-			var roortUU = criteriaUserUpdate.from(Client.class);
-			criteriaUserUpdate.set(Client_.ID, clientUpdate.getId());
+			var rootUU = criteriaUserUpdate.from(Client.class);
+			// criteriaUserUpdate.set(Client_.ID, clientUpdate.getId());
 			criteriaUserUpdate.set(Client_.FIRST_NAME, clientUpdate.getFirstName());
 			criteriaUserUpdate.set(Client_.LAST_NAME, clientUpdate.getLastName());
 			criteriaUserUpdate.set(Client_.MIDDLE_NAME, clientUpdate.getMiddleName());
@@ -109,8 +109,39 @@ public class Service {
 			criteriaUserUpdate.set(Client_.LOGIN, clientUpdate.getLogin());
 			criteriaUserUpdate.set(Client_.ROLE, Converter.convertToRole(clientUpdate.getRole()));
 			criteriaUserUpdate.set(Client_.STATUS, clientUpdate.getStatus());
-			criteriaUserUpdate.where(builder.equal(roortUU.get(Client_.ID), clientUpdate.getId()));
+			criteriaUserUpdate.where(builder.equal(rootUU.get(Client_.ID), clientUpdate.getId()));
 			responceObject = session.createQuery(criteriaUserUpdate).executeUpdate();
+			break;
+		case DELETE_USER:
+			var clientDelete = (ClientBean) data;
+			var criteriaDeleteUser = builder.createCriteriaDelete(Client.class);
+			var rootDU = criteriaDeleteUser.from(Client.class);
+			criteriaDeleteUser.where(builder.equal(rootDU.get(Client_.ID), clientDelete.getId()));
+			responceObject = session.createQuery(criteriaDeleteUser).executeUpdate();
+			break;
+		case DELETE_PRODUCT:
+			var productDelete = Converter.convertToProduct((ProductBean) data);
+			productDelete = session.get(Product.class, productDelete.getId());
+			session.delete(productDelete);
+			responceObject = 1;
+			break;
+		case DELETE_CARGO:
+			var cargoBeanDelete = (CargoBean) data;
+			var cargo = session.get(Cargo.class, cargoBeanDelete.getId());
+			session.delete(cargo);
+			responceObject = 1;
+			break;
+		case DELETE_PRODUCTCARGO:
+			var productCargoBeanDelete = (ProductCargoBean) data;
+			var productCargo = session.get(ProductCargo.class, productCargoBeanDelete.getId());
+			session.delete(productCargo);
+			responceObject = 1;
+			break;
+		case DELETE_POST:
+			var postBeanDelete = (PostBean) data;
+			var post = session.get(Post.class, postBeanDelete.getId());
+			session.delete(post);
+			responceObject = 1;
 			break;
 		}
 		transaction.commit();
