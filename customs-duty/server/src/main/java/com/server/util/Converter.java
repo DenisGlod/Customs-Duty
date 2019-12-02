@@ -1,6 +1,5 @@
 package com.server.util;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -70,7 +69,7 @@ public class Converter {
 
 	public static Cargo convertToCargo(CargoBean bean) {
 		try {
-			return new Cargo(bean.getId(), bean.getUuid(), DateFormat.getInstance().parse(bean.getDate()), convertToPost(bean.getPost()));
+			return new Cargo(bean.getId(), bean.getUuid(), new SimpleDateFormat("dd.MM.yyyy").parse(bean.getDate()), convertToPost(bean.getPost()));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
