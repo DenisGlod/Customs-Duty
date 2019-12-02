@@ -32,6 +32,15 @@ public class Post implements Serializable {
 	@OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Cargo> cargos = new ArrayList<Cargo>();
 
+	public Post() {
+	}
+
+	public Post(Long id, String name, String adress) {
+		this.id = id;
+		this.name = name;
+		this.adress = adress;
+	}
+
 	public Long getId() {
 		return id;
 	}

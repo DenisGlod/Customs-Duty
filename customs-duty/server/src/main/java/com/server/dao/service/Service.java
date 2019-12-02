@@ -97,8 +97,13 @@ public class Service {
 			});
 			responceObject = resultListGPT;
 			break;
+		case ADD_USER:
+			var clientAdd = Converter.convertToClient((ClientBean) data);
+			session.save(clientAdd);
+			responceObject = 1;
+			break;
 		case UPDATE_USER:
-			ClientBean clientUpdate = (ClientBean) data;
+			var clientUpdate = (ClientBean) data;
 			var criteriaUserUpdate = builder.createCriteriaUpdate(Client.class);
 			var rootUU = criteriaUserUpdate.from(Client.class);
 			// criteriaUserUpdate.set(Client_.ID, clientUpdate.getId());
@@ -119,10 +124,26 @@ public class Service {
 			criteriaDeleteUser.where(builder.equal(rootDU.get(Client_.ID), clientDelete.getId()));
 			responceObject = session.createQuery(criteriaDeleteUser).executeUpdate();
 			break;
+		case ADD_PRODUCT:
+			session.save(Converter.convertToProduct((ProductBean) data));
+			responceObject = 1;
+			break;
+		case UPDATE_PRODUCT:
+			session.update(Converter.convertToProduct((ProductBean) data));
+			responceObject = 1;
+			break;
 		case DELETE_PRODUCT:
 			var productDelete = Converter.convertToProduct((ProductBean) data);
 			productDelete = session.get(Product.class, productDelete.getId());
 			session.delete(productDelete);
+			responceObject = 1;
+			break;
+		case ADD_CARGO:
+			session.save(Converter.convertToCargo((CargoBean) data));
+			responceObject = 1;
+			break;
+		case UPDATE_CARGO:
+			session.update(Converter.convertToCargo((CargoBean) data));
 			responceObject = 1;
 			break;
 		case DELETE_CARGO:

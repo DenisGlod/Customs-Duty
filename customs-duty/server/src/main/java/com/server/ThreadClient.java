@@ -33,7 +33,16 @@ public class ThreadClient implements Runnable {
 				responceObject = Service.action(action);
 				break;
 			case LOGIN:
+			case ADD_USER:
+			case ADD_CARGO:
+			case ADD_POST:
+			case ADD_PRODUCT:
+			case ADD_PRODUCTCARGO:
 			case UPDATE_USER:
+			case UPDATE_CARGO:
+			case UPDATE_POST:
+			case UPDATE_PRODUCT:
+			case UPDATE_PRODUCTCARGO:
 			case DELETE_USER:
 			case DELETE_PRODUCT:
 			case DELETE_CARGO:

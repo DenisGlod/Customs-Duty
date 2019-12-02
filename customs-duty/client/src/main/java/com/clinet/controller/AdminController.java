@@ -1,8 +1,6 @@
 package com.clinet.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import com.bean.CargoBean;
@@ -11,6 +9,7 @@ import com.bean.Command;
 import com.bean.PostBean;
 import com.bean.ProductBean;
 import com.bean.ProductCargoBean;
+import com.clinet.App;
 import com.clinet.connector.Service;
 import com.clinet.error.AlterMessageBox;
 import com.clinet.util.Load;
@@ -19,6 +18,7 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -71,29 +71,32 @@ public class AdminController implements Initializable {
 	@FXML
 	private void onAddAction(ActionEvent event) {
 		try {
+			AddEditController controller = null;
 			for (Tab tab : tabPane.getTabs()) {
 				if (tab.isSelected()) {
 					switch (tab.getId()) {
 					case "tabUserTable":
-						AddEditControllerForUserTable.show(Command.ADD_USER);
+						controller = showAddEditForm(Command.ADD_USER, null);
 						break;
 					case "tabProductTable":
-						AddEditControllerForUserTable.show(Command.ADD_PRODUCT);
+						controller = showAddEditForm(Command.ADD_PRODUCT, null);
 						break;
 					case "tabCargoTable":
-						AddEditControllerForUserTable.show(Command.ADD_CARGO);
+						controller = showAddEditForm(Command.ADD_CARGO, null);
 						break;
 					case "tabProductCargoTable":
-						AddEditControllerForUserTable.show(Command.ADD_PRODUCTCARGO);
+						controller = showAddEditForm(Command.ADD_PRODUCTCARGO, null);
 						break;
 					case "tabPostTable":
-						AddEditControllerForUserTable.show(Command.ADD_POST);
+						controller = showAddEditForm(Command.ADD_POST, null);
 						break;
+					}
+					if (controller.status == -1) {
+						tabSelectedChanged();
 					}
 					break;
 				}
 			}
-			tabSelectedChanged();
 		} catch (Exception e) {
 			e.printStackTrace();
 			AlterMessageBox.showError(e.getMessage());
@@ -145,33 +148,127 @@ public class AdminController implements Initializable {
 	@FXML
 	private void onEditAction(ActionEvent event) {
 		try {
+			AddEditController controller = null;
 			for (Tab tab : tabPane.getTabs()) {
-				if (tab.isSelected() && !tableUsers.getSelectionModel().getSelectedItems().isEmpty()) {
+				if (tab.isSelected()) {
 					switch (tab.getId()) {
 					case "tabUserTable":
-						AddEditControllerForUserTable.show(Command.UPDATE_USER, tableUsers.getSelectionModel().getSelectedItem());
+						if (!tableUsers.getSelectionModel().getSelectedItems().isEmpty()) {
+							controller = showAddEditForm(Command.UPDATE_USER, tableUsers.getSelectionModel().getSelectedItem());
+						}
 						break;
 					case "tabProductTable":
-						AddEditControllerForUserTable.show(Command.UPDATE_PRODUCT, tableProduct.getSelectionModel().getSelectedItem());
+						if (!tableProduct.getSelectionModel().getSelectedItems().isEmpty()) {
+							controller = showAddEditForm(Command.UPDATE_PRODUCT, tableProduct.getSelectionModel().getSelectedItem());
+						}
 						break;
 					case "tabCargoTable":
-						AddEditControllerForUserTable.show(Command.UPDATE_CARGO, tableCargo.getSelectionModel().getSelectedItem());
+						if (!tableCargo.getSelectionModel().getSelectedItems().isEmpty()) {
+							controller = showAddEditForm(Command.UPDATE_CARGO, tableCargo.getSelectionModel().getSelectedItem());
+						}
 						break;
 					case "tabProductCargoTable":
-						AddEditControllerForUserTable.show(Command.UPDATE_PRODUCTCARGO, tableProductCargo.getSelectionModel().getSelectedItem());
+						if (!tableProductCargo.getSelectionModel().getSelectedItems().isEmpty()) {
+							controller = showAddEditForm(Command.UPDATE_PRODUCTCARGO, tableProductCargo.getSelectionModel().getSelectedItem());
+						}
 						break;
 					case "tabPostTable":
-						AddEditControllerForUserTable.show(Command.UPDATE_POST, tablePost.getSelectionModel().getSelectedItem());
+						if (!tablePost.getSelectionModel().getSelectedItems().isEmpty()) {
+							controller = showAddEditForm(Command.UPDATE_POST, tablePost.getSelectionModel().getSelectedItem());
+						}
 						break;
+					}
+					if (controller != null && controller.status == -1) {
+						tabSelectedChanged();
 					}
 					break;
 				}
 			}
-			tabSelectedChanged();
 		} catch (Exception e) {
 			e.printStackTrace();
 			AlterMessageBox.showError(e.getMessage());
 		}
+	}
+
+	private AddEditController showAddEditForm(Command command, Object data) {
+		AddEditController returnController = null;
+		try {
+			FXMLLoader loader = null;
+			var stage = new Stage();
+			stage.centerOnScreen();
+			switch (command) {
+			case ADD_USER:
+				loader = new FXMLLoader(App.class.getResource("/fxml/AddEditUser.fxml"));
+				stage.setScene(new Scene(loader.load()));
+				stage.setTitle("Добавить");
+				stage.getIcons().add(Load.loadImage("add.png"));
+				break;
+			case UPDATE_USER:
+				loader = new FXMLLoader(App.class.getResource("/fxml/AddEditUser.fxml"));
+				stage.setScene(new Scene(loader.load()));
+				stage.setTitle("Изменить");
+				stage.getIcons().add(Load.loadImage("edit.png"));
+				break;
+			case ADD_PRODUCT:
+				loader = new FXMLLoader(App.class.getResource("/fxml/AddEditProduct.fxml"));
+				stage.setScene(new Scene(loader.load()));
+				stage.setTitle("Добавить");
+				stage.getIcons().add(Load.loadImage("add.png"));
+				break;
+			case UPDATE_PRODUCT:
+				loader = new FXMLLoader(App.class.getResource("/fxml/AddEditProduct.fxml"));
+				stage.setScene(new Scene(loader.load()));
+				stage.setTitle("Изменить");
+				stage.getIcons().add(Load.loadImage("edit.png"));
+				break;
+			case ADD_CARGO:
+				loader = new FXMLLoader(App.class.getResource("/fxml/AddEditCargo.fxml"));
+				stage.setScene(new Scene(loader.load()));
+				stage.setTitle("Добавить");
+				stage.getIcons().add(Load.loadImage("add.png"));
+				break;
+			case UPDATE_CARGO:
+				loader = new FXMLLoader(App.class.getResource("/fxml/AddEditCargo.fxml"));
+				stage.setScene(new Scene(loader.load()));
+				stage.setTitle("Изменить");
+				stage.getIcons().add(Load.loadImage("edit.png"));
+				break;
+			case ADD_PRODUCTCARGO:
+				loader = new FXMLLoader(App.class.getResource("/fxml/AddEditProductCargo.fxml"));
+				stage.setScene(new Scene(loader.load()));
+				stage.setTitle("Добавить");
+				stage.getIcons().add(Load.loadImage("add.png"));
+				break;
+			case UPDATE_PRODUCTCARGO:
+				loader = new FXMLLoader(App.class.getResource("/fxml/AddEditProductCargo.fxml"));
+				stage.setScene(new Scene(loader.load()));
+				stage.setTitle("Изменить");
+				stage.getIcons().add(Load.loadImage("edit.png"));
+				break;
+			case ADD_POST:
+				loader = new FXMLLoader(App.class.getResource("/fxml/AddEditPost.fxml"));
+				stage.setScene(new Scene(loader.load()));
+				stage.setTitle("Добавить");
+				stage.getIcons().add(Load.loadImage("add.png"));
+				break;
+			case UPDATE_POST:
+				loader = new FXMLLoader(App.class.getResource("/fxml/AddEditPost.fxml"));
+				stage.setScene(new Scene(loader.load()));
+				stage.setTitle("Изменить");
+				stage.getIcons().add(Load.loadImage("edit.png"));
+				break;
+			default:
+				break;
+			}
+			stage.setResizable(false);
+			returnController = loader.getController();
+			returnController.show(command, data, stage);
+			stage.showAndWait();
+		} catch (Exception e) {
+			e.printStackTrace();
+			AlterMessageBox.showError(e.getMessage());
+		}
+		return returnController;
 	}
 
 	public static void show(ClientBean clientBean) {
@@ -211,7 +308,7 @@ public class AdminController implements Initializable {
 					switch (tab.getId()) {
 					case "tabUserTable":
 						tableUsers.getColumns().clear();
-						var listClientBean = createList(Service.action(Command.GET_USER_TABLE), ClientBean.class);
+						var listClientBean = Load.createList(Service.action(Command.GET_USER_TABLE), ClientBean.class);
 						tableUsers.setItems(FXCollections.observableArrayList(listClientBean));
 
 						var id = new TableColumn<ClientBean, String>("№");
@@ -244,7 +341,7 @@ public class AdminController implements Initializable {
 						break;
 					case "tabProductTable":
 						tableProduct.getColumns().clear();
-						var listProduct = createList(Service.action(Command.GET_PRODUCT_TABLE), ProductBean.class);
+						var listProduct = Load.createList(Service.action(Command.GET_PRODUCT_TABLE), ProductBean.class);
 						tableProduct.setItems(FXCollections.observableArrayList(listProduct));
 
 						var idProduct = new TableColumn<ProductBean, String>("№");
@@ -262,7 +359,7 @@ public class AdminController implements Initializable {
 						break;
 					case "tabCargoTable":
 						tableCargo.getColumns().clear();
-						var listCargot = createList(Service.action(Command.GET_CARGO_TABLE), CargoBean.class);
+						var listCargot = Load.createList(Service.action(Command.GET_CARGO_TABLE), CargoBean.class);
 						tableCargo.setItems(FXCollections.observableArrayList(listCargot));
 
 						var idCargo = new TableColumn<CargoBean, String>("№");
@@ -283,7 +380,7 @@ public class AdminController implements Initializable {
 						break;
 					case "tabProductCargoTable":
 						tableProductCargo.getColumns().clear();
-						var listProductCargo = createList(Service.action(Command.GET_PRODUCTCARGO_TABLE), ProductCargoBean.class);
+						var listProductCargo = Load.createList(Service.action(Command.GET_PRODUCTCARGO_TABLE), ProductCargoBean.class);
 						tableProductCargo.setItems(FXCollections.observableArrayList(listProductCargo));
 
 						var idProductCargo = new TableColumn<ProductCargoBean, String>("№");
@@ -307,7 +404,7 @@ public class AdminController implements Initializable {
 						break;
 					case "tabPostTable":
 						tablePost.getColumns().clear();
-						var listPost = createList(Service.action(Command.GET_POST_TABLE), PostBean.class);
+						var listPost = Load.createList(Service.action(Command.GET_POST_TABLE), PostBean.class);
 						tablePost.setItems(FXCollections.observableArrayList(listPost));
 
 						var idPost = new TableColumn<PostBean, String>("№");
@@ -330,19 +427,6 @@ public class AdminController implements Initializable {
 			e.printStackTrace();
 			AlterMessageBox.showError(e.getMessage());
 		}
-	}
-
-	private <T> List<T> createList(Object data, Class<T> ct) {
-		var clientList = new ArrayList<T>();
-		if (data instanceof ArrayList<?>) {
-			var al = (ArrayList<?>) data;
-			for (Object client : al) {
-				if (ct.isInstance(client)) {
-					clientList.add(ct.cast(client));
-				}
-			}
-		}
-		return clientList;
 	}
 
 }

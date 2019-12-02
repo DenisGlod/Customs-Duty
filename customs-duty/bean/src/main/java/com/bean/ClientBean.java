@@ -25,8 +25,17 @@ public class ClientBean implements Serializable {
 	public ClientBean() {
 	}
 
-	public ClientBean(Long id, String login, String password, RoleBean role, Boolean status, String firstName,
-			String lastName, String middleName) {
+	public ClientBean(String login, String password, RoleBean role, Boolean status, String firstName, String lastName, String middleName) {
+		this.login = login;
+		this.password = password;
+		this.role = role;
+		this.status = status;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.middleName = middleName;
+	}
+
+	public ClientBean(Long id, String login, String password, RoleBean role, Boolean status, String firstName, String lastName, String middleName) {
 		super();
 		this.id = id;
 		this.login = login;
@@ -39,8 +48,7 @@ public class ClientBean implements Serializable {
 	}
 
 	public boolean isEmpty() {
-		if (id == null && login == null && password == null && role == null && status == null && firstName == null
-				&& lastName == null && middleName == null) {
+		if (id == null && login == null && password == null && role == null && status == null && firstName == null && lastName == null && middleName == null) {
 			return true;
 		}
 		return false;

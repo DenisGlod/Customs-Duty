@@ -19,6 +19,11 @@ public class ProductBean implements Serializable {
 	public ProductBean() {
 	}
 
+	public ProductBean(Integer code, String name) {
+		this.code = code;
+		this.name = name;
+	}
+
 	public ProductBean(Long id, Integer code, String name) {
 		super();
 		this.id = id;

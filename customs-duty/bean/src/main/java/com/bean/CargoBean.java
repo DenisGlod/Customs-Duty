@@ -21,6 +21,12 @@ public class CargoBean implements Serializable {
 	public CargoBean() {
 	}
 
+	public CargoBean(String uuid, String date, PostBean post) {
+		this.uuid = uuid;
+		this.date = date;
+		this.post = post;
+	}
+
 	public CargoBean(Long id, String uuid, String date, PostBean post) {
 		this.id = id;
 		this.uuid = uuid;
