@@ -6,6 +6,7 @@
 	<groupId>com.courseproject.customs-duty</groupId>
 	<artifactId>client</artifactId>
 	<version>1.0</version>
+	<packaging>jar</packaging>
 
 	<parent>
 		<artifactId>customs-duty</artifactId>
