@@ -119,8 +119,32 @@ public class Service {
 				oos.flush();
 				result = ois.readObject();
 				break;
+			case ADD_PRODUCTCARGO:
+				oos.writeObject(Command.ADD_PRODUCTCARGO);
+				oos.writeObject(object);
+				oos.flush();
+				result = ois.readObject();
+				break;
+			case UPDATE_PRODUCTCARGO:
+				oos.writeObject(Command.UPDATE_PRODUCTCARGO);
+				oos.writeObject(object);
+				oos.flush();
+				result = ois.readObject();
+				break;
 			case DELETE_PRODUCTCARGO:
 				oos.writeObject(Command.DELETE_PRODUCTCARGO);
+				oos.writeObject(object);
+				oos.flush();
+				result = ois.readObject();
+				break;
+			case ADD_POST:
+				oos.writeObject(Command.ADD_POST);
+				oos.writeObject(object);
+				oos.flush();
+				result = ois.readObject();
+				break;
+			case UPDATE_POST:
+				oos.writeObject(Command.UPDATE_POST);
 				oos.writeObject(object);
 				oos.flush();
 				result = ois.readObject();

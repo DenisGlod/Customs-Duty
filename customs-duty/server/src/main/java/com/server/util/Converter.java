@@ -80,4 +80,8 @@ public class Converter {
 		return new Post(post.getId(), post.getName(), post.getAdress());
 	}
 
+	public static ProductCargo convertToProductCargo(ProductCargoBean bean) {
+		return new ProductCargo(bean.getId(), Converter.convertToProduct(bean.getProduct()), Converter.convertToCargo(bean.getCargo()), bean.getWeight(), bean.getCustomsDuty());
+	}
+
 }

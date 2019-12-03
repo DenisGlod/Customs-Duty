@@ -8,6 +8,7 @@ import com.bean.ClientBean;
 import com.bean.Command;
 import com.bean.PostBean;
 import com.bean.ProductBean;
+import com.bean.ProductCargoBean;
 import com.bean.RoleBean;
 import com.clinet.connector.Service;
 import com.clinet.error.AlterMessageBox;
@@ -29,6 +30,7 @@ public class AddEditController {
 	private Stage stage;
 	public int status = 0;
 
+	// Form Client
 	@FXML
 	private TextField tLogin;
 	@FXML
@@ -44,17 +46,35 @@ public class AddEditController {
 	@FXML
 	private TextField tMiddleName;
 
+	// Form Product
 	@FXML
 	private TextField tCodeProduct;
 	@FXML
 	private TextField tNameProduct;
 
+	// Form Cargo
 	@FXML
 	private TextField tUuid;
 	@FXML
 	private DatePicker dDate;
 	@FXML
 	private ComboBox<PostBean> cPost;
+
+	// Form Post
+	@FXML
+	private TextField tNamePost;
+	@FXML
+	private TextField tAddress;
+
+	// From ProductCagro
+	@FXML
+	private ComboBox<ProductBean> cProduct;
+	@FXML
+	private ComboBox<CargoBean> cCargo;
+	@FXML
+	private TextField tWeight;
+	@FXML
+	private TextField tCustomsDuty;
 
 	@FXML
 	private void onSaveAction(ActionEvent event) {
@@ -101,6 +121,20 @@ public class AddEditController {
 			case ADD_CARGO:
 				var addCargoBean = new CargoBean(tUuid.getText(), dDate.getValue().format(DateTimeFormatter.ofPattern("dd.MM.yyy")), cPost.getValue());
 				flag = (int) Service.action(Command.ADD_CARGO, addCargoBean);
+				break;
+			case UPDATE_PRODUCTCARGO:
+				flag = (int) Service.action(Command.UPDATE_PRODUCTCARGO, new ProductCargoBean(((ProductCargoBean) data).getId(), cProduct.getSelectionModel().getSelectedItem(),
+						cCargo.getSelectionModel().getSelectedItem(), Double.valueOf(tWeight.getText()), Double.valueOf(tCustomsDuty.getText())));
+				break;
+			case ADD_PRODUCTCARGO:
+				flag = (int) Service.action(Command.ADD_PRODUCTCARGO, new ProductCargoBean(cProduct.getSelectionModel().getSelectedItem(), cCargo.getSelectionModel().getSelectedItem(),
+						Double.valueOf(tWeight.getText()), Double.valueOf(tCustomsDuty.getText())));
+				break;
+			case UPDATE_POST:
+				flag = (int) Service.action(Command.UPDATE_POST, new PostBean(((PostBean) data).getId(), tNamePost.getText(), tAddress.getText()));
+				break;
+			case ADD_POST:
+				flag = (int) Service.action(Command.ADD_POST, new PostBean(tNamePost.getText(), tAddress.getText()));
 				break;
 			default:
 				break;
@@ -156,6 +190,15 @@ public class AddEditController {
 			case UPDATE_CARGO:
 				initAddEditCargoComponent();
 				break;
+			case ADD_PRODUCTCARGO:
+			case UPDATE_PRODUCTCARGO:
+				initAddEditProductCargoComponent();
+				break;
+			case UPDATE_POST:
+				var postBean = (PostBean) data;
+				tNamePost.setText(postBean.getName());
+				tAddress.setText(postBean.getAdress());
+				break;
 			default:
 				break;
 			}
@@ -164,18 +207,62 @@ public class AddEditController {
 		}
 	}
 
+	private void initAddEditProductCargoComponent() throws Exception {
+		var productCargoBean = (ProductCargoBean) data;
+		var listProduct = Load.createList(Service.action(Command.GET_PRODUCT_TABLE), ProductBean.class);
+		var listCargo = Load.createList(Service.action(Command.GET_CARGO_TABLE), CargoBean.class);
+		cProduct.setItems(FXCollections.observableArrayList(listProduct));
+		cCargo.setItems(FXCollections.observableArrayList(listCargo));
+		if (command == Command.UPDATE_PRODUCTCARGO) {
+			tWeight.setText(Double.toString(productCargoBean.getWeight()));
+			tCustomsDuty.setText(Double.toString(productCargoBean.getCustomsDuty()));
+			cProduct.getSelectionModel().select(productCargoBean.getProduct());
+			cCargo.getSelectionModel().select(productCargoBean.getCargo());
+		} else {
+			cProduct.getSelectionModel().selectFirst();
+			cCargo.getSelectionModel().selectFirst();
+		}
+		cProduct.setConverter(new StringConverter<ProductBean>() {
+			@Override
+			public String toString(ProductBean object) {
+				if (object != null) {
+					return object.getName();
+				}
+				return null;
+			}
+
+			@Override
+			public ProductBean fromString(String string) {
+				return null;
+			}
+		});
+		cCargo.setConverter(new StringConverter<CargoBean>() {
+			@Override
+			public String toString(CargoBean object) {
+				if (object != null) {
+					return object.getUuid();
+				}
+				return null;
+			}
+
+			@Override
+			public CargoBean fromString(String string) {
+				return null;
+			}
+		});
+	}
+
 	private void initAddEditCargoComponent() throws Exception {
 		var cargoBean = (CargoBean) data;
 		dDate.setValue(LocalDate.now());
-		var addPostObject = Service.action(Command.GET_POST_TABLE);
-		var listPostBean = Load.createList(addPostObject, PostBean.class);
+		var listPostBean = Load.createList(Service.action(Command.GET_POST_TABLE), PostBean.class);
 		cPost.setItems(FXCollections.observableArrayList(listPostBean));
 		if (command == Command.UPDATE_CARGO) {
 			cPost.getSelectionModel().select(cargoBean.getPost());
 			dDate.setValue(LocalDate.parse(cargoBean.getDate(), DateTimeFormatter.ofPattern("dd.MM.yyyy")));
 			tUuid.setText(cargoBean.getUuid());
 		} else {
-			cPost.getSelectionModel().select(0);
+			cPost.getSelectionModel().selectFirst();
 		}
 		cPost.setConverter(new StringConverter<PostBean>() {
 			@Override

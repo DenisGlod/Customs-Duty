@@ -34,6 +34,18 @@ public class ProductCargo implements Serializable {
 	@Column(scale = 2)
 	private Double customsDuty;
 
+	public ProductCargo() {
+	}
+
+	public ProductCargo(Long id, Product product, Cargo cargo, Double weight, Double customsDuty) {
+		super();
+		this.id = id;
+		this.product = product;
+		this.cargo = cargo;
+		this.weight = weight;
+		this.customsDuty = customsDuty;
+	}
+
 	public Long getId() {
 		return id;
 	}

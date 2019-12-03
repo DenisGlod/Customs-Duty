@@ -19,6 +19,12 @@ public class PostBean implements Serializable {
 	public PostBean() {
 	}
 
+	public PostBean(String name, String adress) {
+		super();
+		this.name = name;
+		this.adress = adress;
+	}
+
 	public PostBean(Long id, String name, String adress) {
 		super();
 		this.id = id;

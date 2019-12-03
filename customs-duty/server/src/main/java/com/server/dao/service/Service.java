@@ -152,10 +152,26 @@ public class Service {
 			session.delete(cargo);
 			responceObject = 1;
 			break;
+		case ADD_PRODUCTCARGO:
+			session.save(Converter.convertToProductCargo((ProductCargoBean) data));
+			responceObject = 1;
+			break;
+		case UPDATE_PRODUCTCARGO:
+			session.update(Converter.convertToProductCargo((ProductCargoBean) data));
+			responceObject = 1;
+			break;
 		case DELETE_PRODUCTCARGO:
 			var productCargoBeanDelete = (ProductCargoBean) data;
 			var productCargo = session.get(ProductCargo.class, productCargoBeanDelete.getId());
 			session.delete(productCargo);
+			responceObject = 1;
+			break;
+		case ADD_POST:
+			session.save(Converter.convertToPost((PostBean) data));
+			responceObject = 1;
+			break;
+		case UPDATE_POST:
+			session.update(Converter.convertToPost((PostBean) data));
 			responceObject = 1;
 			break;
 		case DELETE_POST:
