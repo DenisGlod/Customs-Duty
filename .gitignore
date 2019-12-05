@@ -39,3 +39,13 @@ tmp/
 *~.nib
 local.properties
 .loadpath
+
+##############################
+## IntelliJ
+##############################
+out/
+.idea/
+.idea_modules/
+*.iml
+*.ipr
+*.iws
