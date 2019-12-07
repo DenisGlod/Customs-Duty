@@ -21,10 +21,10 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="tHost" layoutX="71.0" layoutY="132.0" prefHeight="25.0" prefWidth="126.0" promptText="Адресс сервера" text="localhost" />
-      <TextField fx:id="tPort" layoutX="210.0" layoutY="132.0" prefHeight="25.0" prefWidth="92.0" promptText="Порт" text="8888" />
-      <TextField fx:id="tLogin" layoutX="107.0" layoutY="170.0" promptText="Введите логин" text="admin" />
-      <PasswordField fx:id="tPassword" layoutX="107.0" layoutY="204.0" promptText="Введите пароль" text="admin" />
+      <TextField fx:id="tHost" layoutX="71.0" layoutY="132.0" prefHeight="25.0" prefWidth="126.0" promptText="Адресс сервера" />
+      <TextField fx:id="tPort" layoutX="210.0" layoutY="132.0" prefHeight="25.0" prefWidth="92.0" promptText="Порт" />
+      <TextField fx:id="tLogin" layoutX="107.0" layoutY="170.0" promptText="Введите логин" />
+      <PasswordField fx:id="tPassword" layoutX="107.0" layoutY="204.0" promptText="Введите пароль" />
       <Button layoutX="141.0" layoutY="242.0" mnemonicParsing="false" onAction="#bLoginAction" prefHeight="25.0" prefWidth="82.0" text="Войти">
          <graphic>
             <ImageView pickOnBounds="true" preserveRatio="true">
