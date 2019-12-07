@@ -4,12 +4,14 @@ import java.io.IOException;
 
 import com.bean.ClientBean;
 import com.bean.Command;
+import com.clinet.App;
 import com.clinet.connector.Service;
 import com.clinet.error.AlterMessageBox;
 import com.clinet.util.Load;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -47,8 +49,19 @@ public class LoginController {
 				if (client.isEmpty()) {
 					AlterMessageBox.showError("Неверный логин или пароль!");
 				} else {
-					AdminController.show(client);
-					stage.close();
+					var loader = new FXMLLoader(App.class.getResource("/fxml/Main.fxml"));
+					var stage = new Stage();
+					stage.centerOnScreen();
+					stage.setScene(new Scene(loader.load()));
+					stage.setResizable(true);
+					stage.setMinWidth(615);
+					stage.setMinHeight(440);
+					stage.setTitle("Расчет таможенных сборов");
+					stage.getIcons().add(Load.loadImage("logo.png"));
+					MainController returnController = loader.getController();
+					returnController.show(client);
+					stage.show();
+					LoginController.stage.close();
 				}
 			}
 		} catch (Exception e) {

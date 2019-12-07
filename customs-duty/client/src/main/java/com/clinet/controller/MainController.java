@@ -1,8 +1,5 @@
 package com.clinet.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import com.bean.CargoBean;
 import com.bean.ClientBean;
 import com.bean.Command;
@@ -19,7 +16,6 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -29,7 +25,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class AdminController implements Initializable {
+public class MainController {
 
 	private static ClientBean cb;
 
@@ -271,34 +267,32 @@ public class AdminController implements Initializable {
 		return returnController;
 	}
 
-	public static void show(ClientBean clientBean) {
+	public void show(ClientBean clientBean) {
 		cb = clientBean;
-		try {
-			var stage = new Stage();
-			stage.centerOnScreen();
-			stage.setScene(new Scene(Load.loadFXML("admin.fxml")));
-			stage.setResizable(true);
-			stage.setMinWidth(615);
-			stage.setMinHeight(440);
-			stage.setTitle("Расчет таможенных сборов");
-			stage.getIcons().add(Load.loadImage("logo.png"));
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-			AlterMessageBox.showError(e.getMessage());
+		switch (cb.getRole().getName()) {
+		case "Администратор":
+			lFullName.setText(cb.getLastName() + " " + cb.getFirstName() + " " + cb.getMiddleName());
+			lRole.setText(cb.getRole().getName());
+			tabSelectedChanged();
+			tabUserTable.selectedProperty().addListener(listener -> tabSelectedChanged());
+			tabProductTable.selectedProperty().addListener(listener -> tabSelectedChanged());
+			tabCargoTable.selectedProperty().addListener(listener -> tabSelectedChanged());
+			tabProductCargoTable.selectedProperty().addListener(listener -> tabSelectedChanged());
+			tabPostTable.selectedProperty().addListener(listener -> tabSelectedChanged());
+			break;
+		case "Пользователь":
+			lFullName.setText(cb.getLastName() + " " + cb.getFirstName() + " " + cb.getMiddleName());
+			lRole.setText(cb.getRole().getName());
+			tabSelectedChanged();
+			// tabUserTable.selectedProperty().addListener(listener ->
+			// tabSelectedChanged());
+			tabPane.getTabs().remove(0);
+			tabProductTable.selectedProperty().addListener(listener -> tabSelectedChanged());
+			tabCargoTable.selectedProperty().addListener(listener -> tabSelectedChanged());
+			tabProductCargoTable.selectedProperty().addListener(listener -> tabSelectedChanged());
+			tabPostTable.selectedProperty().addListener(listener -> tabSelectedChanged());
+			break;
 		}
-	}
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		lFullName.setText(cb.getLastName() + " " + cb.getFirstName() + " " + cb.getMiddleName());
-		lRole.setText(cb.getRole().getName());
-		tabSelectedChanged();
-		tabUserTable.selectedProperty().addListener(listener -> tabSelectedChanged());
-		tabProductTable.selectedProperty().addListener(listener -> tabSelectedChanged());
-		tabCargoTable.selectedProperty().addListener(listener -> tabSelectedChanged());
-		tabProductCargoTable.selectedProperty().addListener(listener -> tabSelectedChanged());
-		tabPostTable.selectedProperty().addListener(listener -> tabSelectedChanged());
 	}
 
 	public void tabSelectedChanged() {
