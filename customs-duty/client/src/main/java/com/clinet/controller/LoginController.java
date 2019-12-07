@@ -46,9 +46,7 @@ public class LoginController {
 				client.setPassword(pass);
 				Service.connect(host, port);
 				client = (ClientBean) Service.action(Command.LOGIN, client);
-				if (client.isEmpty()) {
-					AlterMessageBox.showError("Неверный логин или пароль!");
-				} else {
+				if (!client.isEmpty() && client.getStatus()) {
 					var loader = new FXMLLoader(App.class.getResource("/fxml/Main.fxml"));
 					var stage = new Stage();
 					stage.centerOnScreen();
@@ -62,6 +60,10 @@ public class LoginController {
 					returnController.show(client);
 					stage.show();
 					LoginController.stage.close();
+				} else if (!client.isEmpty() && client.getStatus()) {
+					AlterMessageBox.showError("Пользователь не активирован!");
+				} else {
+					AlterMessageBox.showError("Такого пользователя не существует!");
 				}
 			}
 		} catch (Exception e) {

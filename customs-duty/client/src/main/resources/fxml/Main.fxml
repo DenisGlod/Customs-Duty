@@ -65,7 +65,7 @@
 		</TabPane>
 	</center>
 	<top>
-		<AnchorPane prefHeight="48.0" prefWidth="600.0" style="-fx-background-color: #fafafa;" BorderPane.alignment="CENTER">
+		<AnchorPane fx:id="anchorPain" prefHeight="48.0" prefWidth="600.0" style="-fx-background-color: #fcffa8;" BorderPane.alignment="CENTER">
 			<children>
 				<Button layoutX="550.0" layoutY="10.0" mnemonicParsing="false" onAction="#onUserSettingsAction" AnchorPane.rightAnchor="14.0">
 					<graphic>
@@ -78,7 +78,7 @@
 				</Button>
 				<Label fx:id="lRole" layoutX="14.0" layoutY="13.0" text="Роль">
                <graphic>
-                  <ImageView pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="img" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 2, 0, 0, 0);">
                      <image>
                         <Image url="@../image/admin.png" />
                      </image>

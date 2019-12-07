@@ -4,16 +4,17 @@
 	xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.courseproject.customs-duty</groupId>
-	<artifactId>bean</artifactId>
-	<version>1.0</version>
 	<packaging>jar</packaging>
-
+	
 	<parent>
 		<groupId>com.courseproject</groupId>
 		<artifactId>customs-duty</artifactId>
 		<version>1.0</version>
 	</parent>
+	
+	<groupId>com.courseproject.customs-duty</groupId>
+	<artifactId>bean</artifactId>
+	<version>1.0</version>
 
 	<name>bean</name>
 
