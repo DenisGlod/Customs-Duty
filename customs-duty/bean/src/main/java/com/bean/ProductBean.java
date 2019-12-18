@@ -14,21 +14,26 @@ public class ProductBean implements Serializable {
 
 	private String name;
 
+	private Double percent;
+
 	private List<ProductCargoBean> productCargos = new ArrayList<ProductCargoBean>();
 
 	public ProductBean() {
 	}
 
-	public ProductBean(Integer code, String name) {
+	public ProductBean(Integer code, String name, Double percent) {
+		super();
 		this.code = code;
 		this.name = name;
+		this.percent = percent;
 	}
 
-	public ProductBean(Long id, Integer code, String name) {
+	public ProductBean(Long id, Integer code, String name, Double percent) {
 		super();
 		this.id = id;
 		this.code = code;
 		this.name = name;
+		this.percent = percent;
 	}
 
 	public Long getId() {
@@ -55,6 +60,14 @@ public class ProductBean implements Serializable {
 		this.name = name;
 	}
 
+	public Double getPercent() {
+		return percent;
+	}
+
+	public void setPercent(Double percent) {
+		this.percent = percent;
+	}
+
 	public List<ProductCargoBean> getProductCargos() {
 		return productCargos;
 	}
@@ -72,6 +85,8 @@ public class ProductBean implements Serializable {
 		builder.append(code);
 		builder.append(", name=");
 		builder.append(name);
+		builder.append(", percent=");
+		builder.append(percent);
 		builder.append(", productCargos=");
 		builder.append(productCargos);
 		builder.append("]");

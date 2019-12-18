@@ -32,18 +32,22 @@ public class ProductCargo implements Serializable {
 	private Double weight;
 
 	@Column(scale = 2)
+	private Double cost;
+
+	@Column(scale = 2)
 	private Double customsDuty;
 
 	public ProductCargo() {
 	}
 
-	public ProductCargo(Long id, Product product, Cargo cargo, Double weight, Double customsDuty) {
+	public ProductCargo(Long id, Product product, Cargo cargo, Double weight, Double cost, Double customsDuty) {
 		super();
 		this.id = id;
 		this.product = product;
 		this.cargo = cargo;
 		this.weight = weight;
 		this.customsDuty = customsDuty;
+		this.cost = cost;
 	}
 
 	public Long getId() {
@@ -78,6 +82,14 @@ public class ProductCargo implements Serializable {
 		this.weight = weight;
 	}
 
+	public Double getCost() {
+		return cost;
+	}
+
+	public void setCost(Double cost) {
+		this.cost = cost;
+	}
+
 	public Double getCustomsDuty() {
 		return customsDuty;
 	}
@@ -97,6 +109,8 @@ public class ProductCargo implements Serializable {
 		builder.append(cargo);
 		builder.append(", weight=");
 		builder.append(weight);
+		builder.append(", cost=");
+		builder.append(cost);
 		builder.append(", customsDuty=");
 		builder.append(customsDuty);
 		builder.append("]");

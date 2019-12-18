@@ -14,24 +14,29 @@ public class ProductCargoBean implements Serializable {
 
 	private Double weight;
 
+	private Double cost;
+
 	private Double customsDuty;
 
 	public ProductCargoBean() {
 	}
 
-	public ProductCargoBean(Long id, ProductBean product, CargoBean cargo, Double weight, Double customsDuty) {
+	public ProductCargoBean(Long id, ProductBean product, CargoBean cargo, Double weight, Double cost, Double customsDuty) {
+		super();
 		this.id = id;
 		this.product = product;
 		this.cargo = cargo;
 		this.weight = weight;
+		this.cost = cost;
 		this.customsDuty = customsDuty;
 	}
 
-	public ProductCargoBean(ProductBean product, CargoBean cargo, Double weight, Double customsDuty) {
+	public ProductCargoBean(ProductBean product, CargoBean cargo, Double weight, Double cost, Double customsDuty) {
 		super();
 		this.product = product;
 		this.cargo = cargo;
 		this.weight = weight;
+		this.cost = cost;
 		this.customsDuty = customsDuty;
 	}
 
@@ -67,6 +72,14 @@ public class ProductCargoBean implements Serializable {
 		this.weight = weight;
 	}
 
+	public Double getCost() {
+		return cost;
+	}
+
+	public void setCost(Double cost) {
+		this.cost = cost;
+	}
+
 	public Double getCustomsDuty() {
 		return customsDuty;
 	}
@@ -86,6 +99,8 @@ public class ProductCargoBean implements Serializable {
 		builder.append(cargo);
 		builder.append(", weight=");
 		builder.append(weight);
+		builder.append(", cost=");
+		builder.append(cost);
 		builder.append(", customsDuty=");
 		builder.append(customsDuty);
 		builder.append("]");

@@ -14,11 +14,14 @@ import com.clinet.connector.Service;
 import com.clinet.error.AlterMessageBox;
 import com.clinet.util.Load;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -51,6 +54,8 @@ public class AddEditController {
 	private TextField tCodeProduct;
 	@FXML
 	private TextField tNameProduct;
+	@FXML
+	private Spinner<Double> sPercent;
 
 	// Form Cargo
 	@FXML
@@ -73,6 +78,8 @@ public class AddEditController {
 	private ComboBox<CargoBean> cCargo;
 	@FXML
 	private TextField tWeight;
+	@FXML
+	private Spinner<Double> sCost;
 	@FXML
 	private TextField tCustomsDuty;
 
@@ -106,11 +113,11 @@ public class AddEditController {
 				break;
 			case UPDATE_PRODUCT:
 				var dataProductBean = (ProductBean) data;
-				var productBeanUpdate = new ProductBean(dataProductBean.getId(), Integer.parseInt(tCodeProduct.getText()), tNameProduct.getText());
+				var productBeanUpdate = new ProductBean(dataProductBean.getId(), Integer.parseInt(tCodeProduct.getText()), tNameProduct.getText(), sPercent.getValue());
 				flag = (int) Service.action(Command.UPDATE_PRODUCT, productBeanUpdate);
 				break;
 			case ADD_PRODUCT:
-				var productBeanAdd = new ProductBean(Integer.parseInt(tCodeProduct.getText()), tNameProduct.getText());
+				var productBeanAdd = new ProductBean(Integer.parseInt(tCodeProduct.getText()), tNameProduct.getText(), sPercent.getValue());
 				flag = (int) Service.action(Command.ADD_PRODUCT, productBeanAdd);
 				break;
 			case UPDATE_CARGO:
@@ -124,11 +131,11 @@ public class AddEditController {
 				break;
 			case UPDATE_PRODUCTCARGO:
 				flag = (int) Service.action(Command.UPDATE_PRODUCTCARGO, new ProductCargoBean(((ProductCargoBean) data).getId(), cProduct.getSelectionModel().getSelectedItem(),
-						cCargo.getSelectionModel().getSelectedItem(), Double.valueOf(tWeight.getText()), Double.valueOf(tCustomsDuty.getText())));
+						cCargo.getSelectionModel().getSelectedItem(), Double.valueOf(tWeight.getText()), sCost.getValue(), Double.valueOf(tCustomsDuty.getText())));
 				break;
 			case ADD_PRODUCTCARGO:
 				flag = (int) Service.action(Command.ADD_PRODUCTCARGO, new ProductCargoBean(cProduct.getSelectionModel().getSelectedItem(), cCargo.getSelectionModel().getSelectedItem(),
-						Double.valueOf(tWeight.getText()), Double.valueOf(tCustomsDuty.getText())));
+						Double.valueOf(tWeight.getText()), sCost.getValue(), Double.valueOf(tCustomsDuty.getText())));
 				break;
 			case UPDATE_POST:
 				flag = (int) Service.action(Command.UPDATE_POST, new PostBean(((PostBean) data).getId(), tNamePost.getText(), tAddress.getText()));
@@ -185,6 +192,7 @@ public class AddEditController {
 				var productBean = (ProductBean) data;
 				tCodeProduct.setText(Integer.toString(productBean.getCode()));
 				tNameProduct.setText(productBean.getName());
+				sPercent.getValueFactory().setValue(productBean.getPercent());
 				break;
 			case ADD_CARGO:
 			case UPDATE_CARGO:
@@ -218,6 +226,7 @@ public class AddEditController {
 			tCustomsDuty.setText(Double.toString(productCargoBean.getCustomsDuty()));
 			cProduct.getSelectionModel().select(productCargoBean.getProduct());
 			cCargo.getSelectionModel().select(productCargoBean.getCargo());
+			sCost.getValueFactory().setValue(productCargoBean.getCost());
 		} else {
 			cProduct.getSelectionModel().selectFirst();
 			cCargo.getSelectionModel().selectFirst();
@@ -248,6 +257,24 @@ public class AddEditController {
 			@Override
 			public CargoBean fromString(String string) {
 				return null;
+			}
+		});
+		sCost.valueProperty().addListener(new ChangeListener<Double>() {
+			@Override
+			public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
+				ProductBean temp = null;
+				switch (command) {
+				case ADD_PRODUCTCARGO:
+					temp = cProduct.getValue();
+					break;
+				case UPDATE_PRODUCTCARGO:
+					temp = productCargoBean.getProduct();
+					break;
+				default:
+					break;
+				}
+				var result = newValue * temp.getPercent() / 100;
+				tCustomsDuty.setText(Double.toString(result));
 			}
 		});
 	}

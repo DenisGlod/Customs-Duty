@@ -31,7 +31,7 @@ public class Converter {
 	}
 
 	public static ProductBean convertToProductBean(Product product) {
-		return new ProductBean(product.getId(), product.getCode(), product.getName());
+		return new ProductBean(product.getId(), product.getCode(), product.getName(), product.getPercent());
 	}
 
 	public static CargoBean convertToCargoBean(Cargo item) {
@@ -44,14 +44,11 @@ public class Converter {
 	}
 
 	public static ProductCargoBean convertToProductCargoBean(ProductCargo item) {
-		return new ProductCargoBean(item.getId(), convertToProductBean(item.getProduct()), convertToCargoBean(item.getCargo()), item.getWeight(), item.getCustomsDuty());
+		return new ProductCargoBean(item.getId(), convertToProductBean(item.getProduct()), convertToCargoBean(item.getCargo()), item.getWeight(), item.getCost(), item.getCustomsDuty());
 	}
 
 	public static Role convertToRole(RoleBean roleBean) {
-		var role = new Role();
-		role.setId(roleBean.getId());
-		role.setName(roleBean.getName());
-		return role;
+		return new Role(roleBean.getId(), roleBean.getName());
 	}
 
 	public static Client convertToClient(ClientBean clientUpdate) {
@@ -60,11 +57,7 @@ public class Converter {
 	}
 
 	public static Product convertToProduct(ProductBean data) {
-		var product = new Product();
-		product.setId(data.getId());
-		product.setCode(data.getCode());
-		product.setName(data.getName());
-		return product;
+		return new Product(data.getId(), data.getCode(), data.getName(), data.getPercent());
 	}
 
 	public static Cargo convertToCargo(CargoBean bean) {
@@ -81,7 +74,7 @@ public class Converter {
 	}
 
 	public static ProductCargo convertToProductCargo(ProductCargoBean bean) {
-		return new ProductCargo(bean.getId(), Converter.convertToProduct(bean.getProduct()), Converter.convertToCargo(bean.getCargo()), bean.getWeight(), bean.getCustomsDuty());
+		return new ProductCargo(bean.getId(), Converter.convertToProduct(bean.getProduct()), Converter.convertToCargo(bean.getCargo()), bean.getWeight(), bean.getCost(), bean.getCustomsDuty());
 	}
 
 }

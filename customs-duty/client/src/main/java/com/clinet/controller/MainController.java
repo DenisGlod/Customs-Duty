@@ -157,32 +157,27 @@ public class MainController {
 					switch (tab.getId()) {
 					case "tabUserTable":
 						if (!tableUsers.getSelectionModel().getSelectedItems().isEmpty()) {
-							controller = showAddEditForm(Command.UPDATE_USER,
-									tableUsers.getSelectionModel().getSelectedItem());
+							controller = showAddEditForm(Command.UPDATE_USER, tableUsers.getSelectionModel().getSelectedItem());
 						}
 						break;
 					case "tabProductTable":
 						if (!tableProduct.getSelectionModel().getSelectedItems().isEmpty()) {
-							controller = showAddEditForm(Command.UPDATE_PRODUCT,
-									tableProduct.getSelectionModel().getSelectedItem());
+							controller = showAddEditForm(Command.UPDATE_PRODUCT, tableProduct.getSelectionModel().getSelectedItem());
 						}
 						break;
 					case "tabCargoTable":
 						if (!tableCargo.getSelectionModel().getSelectedItems().isEmpty()) {
-							controller = showAddEditForm(Command.UPDATE_CARGO,
-									tableCargo.getSelectionModel().getSelectedItem());
+							controller = showAddEditForm(Command.UPDATE_CARGO, tableCargo.getSelectionModel().getSelectedItem());
 						}
 						break;
 					case "tabProductCargoTable":
 						if (!tableProductCargo.getSelectionModel().getSelectedItems().isEmpty()) {
-							controller = showAddEditForm(Command.UPDATE_PRODUCTCARGO,
-									tableProductCargo.getSelectionModel().getSelectedItem());
+							controller = showAddEditForm(Command.UPDATE_PRODUCTCARGO, tableProductCargo.getSelectionModel().getSelectedItem());
 						}
 						break;
 					case "tabPostTable":
 						if (!tablePost.getSelectionModel().getSelectedItems().isEmpty()) {
-							controller = showAddEditForm(Command.UPDATE_POST,
-									tablePost.getSelectionModel().getSelectedItem());
+							controller = showAddEditForm(Command.UPDATE_POST, tablePost.getSelectionModel().getSelectedItem());
 						}
 						break;
 					}
@@ -324,8 +319,7 @@ public class MainController {
 						id.setCellValueFactory(new PropertyValueFactory<>("id"));
 						login.setCellValueFactory(new PropertyValueFactory<>("login"));
 						password.setCellValueFactory(new PropertyValueFactory<>("password"));
-						role.setCellValueFactory(
-								cellData -> Bindings.selectString(cellData.getValue().getRole(), "name"));
+						role.setCellValueFactory(cellData -> Bindings.selectString(cellData.getValue().getRole(), "name"));
 						status.setCellValueFactory(new PropertyValueFactory<>("status"));
 						firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 						lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
@@ -349,14 +343,17 @@ public class MainController {
 						var idProduct = new TableColumn<ProductBean, String>("№");
 						var code = new TableColumn<ProductBean, String>("Код товара");
 						var name = new TableColumn<ProductBean, String>("Наименование");
+						var percent = new TableColumn<ProductBean, String>("Процент (%)");
 
 						idProduct.setCellValueFactory(new PropertyValueFactory<>("id"));
 						code.setCellValueFactory(new PropertyValueFactory<>("code"));
 						name.setCellValueFactory(new PropertyValueFactory<>("name"));
+						percent.setCellValueFactory(new PropertyValueFactory<>("percent"));
 
 						tableProduct.getColumns().add(idProduct);
 						tableProduct.getColumns().add(code);
 						tableProduct.getColumns().add(name);
+						tableProduct.getColumns().add(percent);
 						// tableProduct.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 						break;
 					case "tabCargoTable":
@@ -372,8 +369,7 @@ public class MainController {
 						idCargo.setCellValueFactory(new PropertyValueFactory<>("id"));
 						uuid.setCellValueFactory(new PropertyValueFactory<>("uuid"));
 						date.setCellValueFactory(new PropertyValueFactory<>("date"));
-						post.setCellValueFactory(
-								cellData -> Bindings.selectString(cellData.getValue().getPost(), "name"));
+						post.setCellValueFactory(cellData -> Bindings.selectString(cellData.getValue().getPost(), "name"));
 
 						tableCargo.getColumns().add(idCargo);
 						tableCargo.getColumns().add(uuid);
@@ -383,28 +379,28 @@ public class MainController {
 						break;
 					case "tabProductCargoTable":
 						tableProductCargo.getColumns().clear();
-						var listProductCargo = Load.createList(Service.action(Command.GET_PRODUCTCARGO_TABLE),
-								ProductCargoBean.class);
+						var listProductCargo = Load.createList(Service.action(Command.GET_PRODUCTCARGO_TABLE), ProductCargoBean.class);
 						tableProductCargo.setItems(FXCollections.observableArrayList(listProductCargo));
 
 						var idProductCargo = new TableColumn<ProductCargoBean, String>("№");
 						var productName = new TableColumn<ProductCargoBean, String>("Наименование товара");
 						var cargoUUID = new TableColumn<ProductCargoBean, String>("UUID груза");
 						var weight = new TableColumn<ProductCargoBean, String>("Вес (кг)");
+						var cost = new TableColumn<ProductCargoBean, String>("Цена");
 						var customsDuty = new TableColumn<ProductCargoBean, String>("Налог (BYN)");
 
 						idProductCargo.setCellValueFactory(new PropertyValueFactory<>("id"));
-						productName.setCellValueFactory(
-								cellData -> Bindings.selectString(cellData.getValue().getProduct(), "name"));
-						cargoUUID.setCellValueFactory(
-								cellData -> Bindings.selectString(cellData.getValue().getCargo(), "uuid"));
+						productName.setCellValueFactory(cellData -> Bindings.selectString(cellData.getValue().getProduct(), "name"));
+						cargoUUID.setCellValueFactory(cellData -> Bindings.selectString(cellData.getValue().getCargo(), "uuid"));
 						weight.setCellValueFactory(new PropertyValueFactory<>("weight"));
+						cost.setCellValueFactory(new PropertyValueFactory<>("cost"));
 						customsDuty.setCellValueFactory(new PropertyValueFactory<>("customsDuty"));
 
 						tableProductCargo.getColumns().add(idProductCargo);
 						tableProductCargo.getColumns().add(productName);
 						tableProductCargo.getColumns().add(cargoUUID);
 						tableProductCargo.getColumns().add(weight);
+						tableProductCargo.getColumns().add(cost);
 						tableProductCargo.getColumns().add(customsDuty);
 						// tableProductCargo.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 						break;

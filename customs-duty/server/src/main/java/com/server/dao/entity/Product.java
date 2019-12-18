@@ -29,8 +29,23 @@ public class Product implements Serializable {
 	@Column(nullable = false)
 	private String name;
 
+	@Column(scale = 2)
+	private Double percent;
+
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ProductCargo> productCargos = new ArrayList<ProductCargo>();
+
+	public Product() {
+		super();
+	}
+
+	public Product(Long id, Integer code, String name, Double percent) {
+		super();
+		this.id = id;
+		this.code = code;
+		this.name = name;
+		this.percent = percent;
+	}
 
 	public Long getId() {
 		return id;
@@ -56,6 +71,14 @@ public class Product implements Serializable {
 		this.name = name;
 	}
 
+	public Double getPercent() {
+		return percent;
+	}
+
+	public void setPercent(Double percent) {
+		this.percent = percent;
+	}
+
 	public List<ProductCargo> getProductCargos() {
 		return productCargos;
 	}
@@ -73,6 +96,8 @@ public class Product implements Serializable {
 		builder.append(code);
 		builder.append(", name=");
 		builder.append(name);
+		builder.append(", percent=");
+		builder.append(percent);
 		builder.append(", productCargos=");
 		builder.append(productCargos);
 		builder.append("]");
